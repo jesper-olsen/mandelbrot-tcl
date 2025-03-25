@@ -107,7 +107,14 @@ tclsh mandelbrot2.tcl png=1 width=1000 height=750 > image.txt
 ```
 ![PNG](https://raw.githubusercontent.com/jesper-olsen/mandelbrot-tcl/main/mandelbrot.png)
 
+% time tclsh mandelbrot.tcl png=1 width=5000 height=5000>image.txt
+tclsh mandelbrot.tcl png=1 width=5000 height=5000 > image.txt
+568.18s user 2.94s system 80% cpu 11:46.07 total
+
 ```
 % echo 'puts $tcl_version' | tclsh
 8.5
+
+% sysctl -n machdep.cpu.brand_string
+Apple M1
 ```
