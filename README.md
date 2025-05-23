@@ -10,6 +10,7 @@ Mandelbrot with [Tcl](https://www.tcl-lang.org/). Other languages:
 * [Mojo](https://github.com/jesper-olsen/mandelbrot-mojo) 
 * [Fortran](https://github.com/jesper-olsen/mandelbrot-f) 
 * [Nushell](https://github.com/jesper-olsen/mandelbrot-nu)
+* [R](https://github.com/jesper-olsen/mandelbrot-R)
 
 
 
