@@ -1,22 +1,46 @@
+# Mandelbrot in Tcl 
 
-mandelbrot-tcl
-==============
+This repository contains a tcl implementation for generating visualizations of the Mandelbrot set. It is part of a larger project comparing implementations across various programming languages.
 
-Mandelbrot with [Tcl](https://www.tcl-lang.org/). Other languages: 
+The program compiles to a single native executable. It can render the Mandelbrot set directly to the terminal as ASCII art or produce a data file for `gnuplot` to generate a high-resolution PNG image.
 
-* [Rust](https://github.com/jesper-olsen/mandelbrot-rs) 
-* [Erlang](https://github.com/jesper-olsen/mandelbrot_erl) 
-* [Python](https://github.com/jesper-olsen/mandelbrot-py) 
-* [Mojo](https://github.com/jesper-olsen/mandelbrot-mojo) 
-* [Fortran](https://github.com/jesper-olsen/mandelbrot-f) 
-* [Nushell](https://github.com/jesper-olsen/mandelbrot-nu)
-* [R](https://github.com/jesper-olsen/mandelbrot-R)
-* [Lua](https://github.com/jesper-olsen/mandelbrot-lua)
+### Other Language Implementations
 
+This project compares the performance and features of Mandelbrot set generation in different languages.
+Single Thread/Multi-thread shows the number of seconds it takes to do a 5000x5000 calculation.
 
+| Language    | Repository                                                         | Single Thread   | Multi-Thread |
+| :--------   | :----------------------------------------------------------------- | ---------------:| -----------: |
+| Awk         | [mandelbrot-awk](https://github.com/jesper-olsen/mandelbrot-awk)   |           805.9 |              |
+| C           | [mandelbrot-c](https://github.com/jesper-olsen/mandelbrot-c)       |             9.1 |              |
+| Erlang      | [mandelbrot_erl](https://github.com/jesper-olsen/mandelbrot_erl)   |            56.0 |           16 |
+| Fortran     | [mandelbrot-f](https://github.com/jesper-olsen/mandelbrot-f)       |            11.6 |              |
+| Lua         | [mandelbrot-lua](https://github.com/jesper-olsen/mandelbrot-lua)   |           158.2 |              |
+| Mojo        | [mandelbrot-mojo](https://github.com/jesper-olsen/mandelbrot-mojo) |                 |              |
+| Nushell     | [mandelbrot-nu](https://github.com/jesper-olsen/mandelbrot-nu)     |   (est) 11488.5 |              |
+| Python      | [mandelbrot-py](https://github.com/jesper-olsen/mandelbrot-py)     |    (pure) 177.2 | (jax)    7.5 |
+| R           | [mandelbrot-R](https://github.com/jesper-olsen/mandelbrot-R)       |           562.0 |              |
+| Rust        | [mandelbrot-rs](https://github.com/jesper-olsen/mandelbrot-rs)     |             8.9 |          2.5 |
+| **Tcl**     | [mandelbrot-tcl](https://github.com/jesper-olsen/mandelbrot-tcl)   |           706.1 |              |
 
-Run
 ---
+
+## Prerequisites
+
+You will need the following installed:
+
+1.  **Tcl** - e.g. brew install tcl-tk.
+2.  **Gnuplot** (required *only* for generating PNG images).
+
+---
+## Usage
+
+The script can be configured via command-line arguments using a `key=value` format.
+
+### 1. ASCII Art Output
+
+To render the Mandelbrot set directly in your terminal, run the executable.
+
 ```
 tclsh mandelbrot.tcl
                                                                                                     
@@ -98,24 +122,38 @@ tclsh mandelbrot.tcl
                    _2...M_2MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 ```
 
+### 2. PNG Image Generation
 
+To create a high-resolution PNG, you first generate a data file and then process it with `gnuplot`.
 ```
-% time tclsh mandelbrot.tcl png=1 width=1000 height=750>image.txt
-tclsh mandelbrot2.tcl png=1 width=1000 height=750 > image.txt
-16.70s user 0.04s system 99% cpu 16.768 total
+% tclsh mandelbrot.tcl png=1 width=1000 height=750>image.dat
 
 % gnuplot topng.gp
 % ^open mandelbrot.png
 ```
 ![PNG](https://raw.githubusercontent.com/jesper-olsen/mandelbrot-tcl/main/mandelbrot.png)
 
+## Performance
+
+Benchmarks were run on an **Apple M1** system with tclsh 8.5
+
+**Generating a 1000x750 data file:**
+
+```sh
+% time tclsh mandelbrot.tcl png=1 width=1000 height=750>image.dat
+16.70s user 0.04s system 99% cpu 16.768 total
 ```
+
+
+**Generating a 5000x5000 data file:**
+
+```sh
 % time tclsh mandelbrot.tcl png=1 width=5000 height=5000>image.txt
 568.18s user 2.94s system 80% cpu 11:46.07 total
+```
 
+
+```
 % echo 'puts $tcl_version' | tclsh
 8.5
-
-% sysctl -n machdep.cpu.brand_string
-Apple M1
 ```
