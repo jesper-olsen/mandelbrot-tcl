@@ -11,20 +11,22 @@ This project compares the performance and features of Mandelbrot set generation 
 Single Thread/Multi-thread shows the number of seconds it takes to do a 5000x5000 calculation.
 
 
-| Language    | Repository                                                         | Single Thread   | Multi-Thread |
-| :--------   | :----------------------------------------------------------------- | ---------------:| -----------: |
-| Awk         | [mandelbrot-awk](https://github.com/jesper-olsen/mandelbrot-awk)   |           805.9 |              |
-| C           | [mandelbrot-c](https://github.com/jesper-olsen/mandelbrot-c)       |             6.9 |          1.4 |
-| Erlang      | [mandelbrot_erl](https://github.com/jesper-olsen/mandelbrot_erl)   |            56.0 |           16 |
-| Fortran     | [mandelbrot-f](https://github.com/jesper-olsen/mandelbrot-f)       |            11.6 |              |
-| Lua         | [mandelbrot-lua](https://github.com/jesper-olsen/mandelbrot-lua)   |           158.2 |              |
-| Mojo        | [mandelbrot-mojo](https://github.com/jesper-olsen/mandelbrot-mojo) |            39.6 |         39.2 |
-| Nushell     | [mandelbrot-nu](https://github.com/jesper-olsen/mandelbrot-nu)     |   (est) 11488.5 |              |
-| Python      | [mandelbrot-py](https://github.com/jesper-olsen/mandelbrot-py)     |    (pure) 177.2 | (jax)    7.5 |
-| R           | [mandelbrot-R](https://github.com/jesper-olsen/mandelbrot-R)       |           562.0 |              |
-| Rust        | [mandelbrot-rs](https://github.com/jesper-olsen/mandelbrot-rs)     |             8.4 |          2.2 |
-| **Tcl**     | [mandelbrot-tcl](https://github.com/jesper-olsen/mandelbrot-tcl)   |           706.1 |              |
-| Zig         | [mandelbrot-zig](https://github.com/jesper-olsen/mandelbrot-zig)   |             8.6 |          1.9 |
+| Language    | Repository                                                           | Single Thread   | Multi-Thread | Simd | Multi-Thread + Simd |
+| :--------   | :------------------------------------------------------------------- | ---------------:| -----------: | ----:| ------------------: |
+| **Awk**     | [mandelbrot-awk](https://github.com/jesper-olsen/mandelbrot-awk)     |           417.9 |              |      |                     |
+| C           | [mandelbrot-c](https://github.com/jesper-olsen/mandelbrot-c)         |             3.6 |          0.6 |  0.7 |               0.2   |
+| Erlang      | [mandelbrot_erl](https://github.com/jesper-olsen/mandelbrot_erl)     |                 |              |      |                     |
+| Fortran     | [mandelbrot-f](https://github.com/jesper-olsen/mandelbrot-f)         |                 |              |      |                     |
+| Lua         | [mandelbrot-lua](https://github.com/jesper-olsen/mandelbrot-lua)     |            33.2 |              |      |                     |
+| Mojo        | [mandelbrot-mojo](https://github.com/jesper-olsen/mandelbrot-mojo)   |             3.8 |          1.2 |  0.7 |               0.4   |
+| Nushell     | [mandelbrot-nu](https://github.com/jesper-olsen/mandelbrot-nu)       |                 |              |      |                     |
+| Odin        | [mandelbrot-odin](https://github.com/jesper-olsen/mandelbrot-odin)   |             4.4 |              |      |                     |
+| Python      | [mandelbrot-py](https://github.com/jesper-olsen/mandelbrot-py)       |                 |              |      |                     |
+| R           | [mandelbrot-R](https://github.com/jesper-olsen/mandelbrot-R)         |                 |              |      |                     |
+| Rust        | [mandelbrot-rs](https://github.com/jesper-olsen/mandelbrot-rs)       |             4.7 |          1.3 |      |                     |
+| Swift       | [mandelbrot-swift](https://github.com/jesper-olsen/mandelbrot-swift) |             4.5 |              |      |                     |
+| Tcl         | [mandelbrot-tcl](https://github.com/jesper-olsen/mandelbrot-tcl)     |           306.9 |              |      |                     |
+| Zig         | [mandelbrot-zig](https://github.com/jesper-olsen/mandelbrot-zig)     |             4.9 |          0.9 |  0.7 |               0.3   |
 
 
 
@@ -140,21 +142,21 @@ To create a high-resolution PNG, you first generate a data file and then process
 
 ## Performance
 
-Benchmarks were run on an **Apple M1** system with tclsh 8.5
+Benchmarks were run on an **Apple M5** system with tclsh 8.5
 
 **Generating a 1000x750 data file:**
 
 ```sh
-% time tclsh mandelbrot.tcl png=1 width=1000 height=750>image.dat
-16.70s user 0.04s system 99% cpu 16.768 total
+time tclsh mandelbrot.tcl png=1 width=1000 height=750>image.dat
+8.99s user 0.02s system 99% cpu 9.025 total
 ```
 
 
 **Generating a 5000x5000 data file:**
 
 ```sh
-% time tclsh mandelbrot.tcl png=1 width=5000 height=5000>image.txt
-568.18s user 2.94s system 80% cpu 11:46.07 total
+time tclsh mandelbrot.tcl png=1 width=5000 height=5000>image.txt
+304.31s user 0.88s system 99% cpu 5:05.90 total
 ```
 
 
